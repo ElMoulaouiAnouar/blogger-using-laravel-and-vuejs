@@ -1,0 +1,91 @@
+ function PostData(data){
+            $.ajax({
+                type : 'post',
+                data : data,
+                enctype : 'multipart/form-data',
+                processData : false,
+                contentType : false,
+                cache : false,
+                url : "{{route('post.store')}}",
+                success : function(response){
+                    console.log(response);
+                },
+                error : function(response){
+                    Object.keys(response.responseJSON.errors).forEach(function(key){
+                        $('#error_'+key).text(response.responseJSON.errors[key]);
+                    });
+                }
+            });
+        }
+
+
+
+
+function getCategories(){
+ $.ajax({
+                type : 'get',
+                data : {},
+                url : "{{route('categorie.all')}}",
+                success : function(response){
+                    var options = '<option selected value="0">Chose Categorie...</option>';
+                    response.forEach(item => {
+                        options += '<option value='+item.id+'>'+item.categorie_title+'</option>';
+                    });
+                    $('#categorie').html(options);
+                },
+                error : function(response){
+                    toastr.error('not Categories');
+                }
+            });
+
+
+
+function getTags(){
+$.ajax({
+                type : 'get',
+                data : {
+                    id : id
+                },
+                url : '{{route("tag.all")}}',
+                success : function(response){
+                    var options = '';
+                    response.forEach(item => {
+                        options += '<option value='+item.id+'>'+item.tag_title+'</option>';
+                    });
+                     $('#tag').html(options);
+                },
+                error : function(response){
+                    toastr.error('not tag');
+                }
+            });
+}
+
+
+
+
+
+////////////////////// file craete tag ///////////////////////
+function getCtegories(){
+
+ $.ajax({
+                type : 'get',
+                data : {},
+                url : "{{route('categorie.all')}}",
+                success : function(response){
+                    var options = '<option selected value="">Chose Categorie...</option>';
+                    response.forEach(item => {
+                        options += '<option value='+item.id+'>'+item.categorie_title+'</option>';
+                    });
+                    $('select').html(options);
+                },
+                error : function(response){
+                    toastr.error('not Categories');
+                }
+            });
+
+}
+
+
+
+
+
